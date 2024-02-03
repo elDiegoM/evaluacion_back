@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\Controller;
+use App\Models\LoginActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -20,6 +21,13 @@ class LoginController extends Controller
             $user = Auth::user();
             $success['token'] =  $user->createToken('Session Succesfull')->accessToken;
             $success['usuario'] =  $user;
+
+            LoginActivity::create([
+                'user_id' => auth()->user()->id,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->header('User-Agent'),
+            ]);
+
             return $this->sendResponse($success, 'Login Exitoso');
         } else {
             return $this->sendError('Sin Autorizacion.', 401);

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\UserController\UserController;
 use App\Http\Controllers\LoginController\LoginController;
+use App\Http\Controllers\MovieController\MovieController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('login', [LoginController::class, 'login']);
 Route::resource('user', UserController::class);
+Route::get('getlogs', [UserController::class, 'getLogs']);
+
+
+
+Route::get('movies/list/{id_page}', [MovieController::class, 'index']);
+Route::get('movies/search/{name}', [MovieController::class, 'show']);
+Route::post('movies/addfavorite/{account_id}/{movie_id}', [MovieController::class, 'markFavorite']);
+Route::get('movies/getfavorites/{account_id}', [MovieController::class, 'getFavorites']);
+
 
 
 

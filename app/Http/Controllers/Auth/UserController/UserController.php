@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\UserController;
 
 use App\Http\Controllers\Controller;
+use App\Models\LoginActivity;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -62,5 +63,11 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getLogs()
+    {
+        $getLogs = LoginActivity::all();
+        return $this->sendResponse($getLogs, 'Logs Encontrados');
     }
 }
